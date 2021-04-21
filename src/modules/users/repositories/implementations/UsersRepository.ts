@@ -23,13 +23,12 @@ class UsersRepository implements IUsersRepository {
 
     Object.assign(user, {
       name,
-      email,
-      created_at:new Date,
-      updated_at: new Date
+      email
     })
 
     this.users.push(user)
     return user
+   
   }
 
   findById(id: string): User | undefined {

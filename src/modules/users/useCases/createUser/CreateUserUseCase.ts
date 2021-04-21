@@ -13,12 +13,13 @@ class CreateUserUseCase {
 
   execute({ email, name }: IRequest): User {
 
+
+  
    const ExistEmail = this.usersRepository.findByEmail(email)
 
    if(ExistEmail){
     throw new Error("Mensagem do erro");
-   }   
-
+   } 
     return this.usersRepository.create({email, name})
       
 
