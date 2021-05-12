@@ -1,0 +1,223 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Atlas",
+        "description": "Esse é uma documentação sobre a Atlas API.",
+        "version": "1.0.0",
+        "contact": {
+            "email": "pedromatheusduarte@gmail.com"
+        }
+    },
+    "tags": [
+        {
+            "name": "Users",
+            "description": "Gerenciamento de usuários"
+        }
+    ],
+    "paths": {
+        "/users": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Criar um novo usuário",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "name": "Pedro",
+                                    "email": "pedromatheusduarte@gmail.com"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "content": {
+                            "application/json": {
+                                "description": "Operação realizada com sucesso.",
+                                "example": {
+                                    "id": "85221b57-88d0-4a3c-8cba-a7a160863bee",
+                                    "admin": false,
+                                    "created_at": "2021-05-12T13:59:46.751Z",
+                                    "updated_at": "2021-05-12T13:59:46.751Z",
+                                    "name": "Pedro",
+                                    "email": "pedromatheusduarte@gmail.com"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "content": {
+                            "application/json": {
+                                "description": "Email já está sendo utilizado.",
+                                "example": {
+                                    "error": "mensagem do erro"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Retorna todos os usuários.",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "items": {
+                                "type": "$uuid"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "description": "Operação realizada com sucesso",
+                                "example": [
+                                    {
+                                      "id": "ab123b17-dd69-41ca-b0cb-d8da3a5103bc",
+                                      "admin": false,
+                                      "created_at": "2021-05-12T14:28:37.833Z",
+                                      "updated_at": "2021-05-12T14:28:37.833Z",
+                                      "name": "Pedro",
+                                      "email": "pedromatheusduarte@gmail.com"
+                                    },
+                                    {
+                                      "id": "e0d6f26e-e6f0-4bcd-8718-09d330616f10",
+                                      "admin": true,
+                                      "created_at": "2021-05-12T14:28:45.020Z",
+                                      "updated_at": "2021-05-12T14:28:57.274Z",
+                                      "name": "Pedro",
+                                      "email": "pedromatheusduarte@gmail.comM"
+                                    }
+                                  ]
+                                  
+                            }
+                        }
+                    },
+                    "400": {
+                        "content": {
+                            "application/json": {
+                                "description": "Usuário sem permissão ou Usuário não encontrado.",
+                                "example": {
+                                    "error": "mensagem do erro"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{user_id}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Retorna um usuário especifico",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID do usuário"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "content": {
+                            "application/json": {
+                                "description": "Operação realizada com sucesso",
+                                "example": {
+                                    "id": "865d1b60-8b16-4bb4-a6b6-e49ccbb17b07",
+                                    "admin": false,
+                                    "created_at": "2021-05-12T14:21:29.234Z",
+                                    "updated_at": "2021-05-12T14:21:29.234Z",
+                                    "name": "Pedro",
+                                    "email": "pedromatheusduarte@gmail.com"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "content": {
+                            "application/json": {
+                                "description": "Usuário não encontrado",
+                                "example": {
+                                    "error": "mensagem do erro"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{user_id}/admin": {
+            "patch": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Torna admin um usuário",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "items": {
+                                "type": "$uuid"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "description": "Operação realizada com sucesso",
+                                "example": {
+                                    "id": "1df23377-e53f-4d6a-8d7d-3d2aa27b183a",
+                                    "admin": true,
+                                    "created_at": "2021-05-12T14:16:12.562Z",
+                                    "updated_at": "2021-05-12T14:16:27.002Z",
+                                    "name": "Pedro",
+                                    "email": "pedromatheusduarte@gmail.com"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "content": {
+                            "application/json": {
+                                "description": "Usuário não encontrado",
+                                "example": {
+                                    "error": "mensagem do erro"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
